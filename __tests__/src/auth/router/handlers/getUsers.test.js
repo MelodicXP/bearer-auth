@@ -1,7 +1,5 @@
 'use strict';
 
-const TEST_SECRET = process.env.SECRET;
-
 const { sequelizeDatabase } = require('../../../../../src/auth/models');
 const { handleGetUsers } = require('../../../../../src/auth/router/handlers.js');
 
