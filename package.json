@@ -9,10 +9,7 @@
     "db:config": "sequelize init:config",
     "db:create": "sequelize db:create",
     "test-watch": "NODE_ENV=test jest --verbose --coverage --watchAll",
-    "test": "NODE_ENV=test jest --verbose --coverage"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "test": "NODE_ENV=test jest --verbose --coverage --runInBand"
   },
   "keywords": [],
   "author": "",
