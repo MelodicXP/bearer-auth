@@ -1,7 +1,5 @@
 'use strict';
 
-const TEST_SECRET = process.env.SECRET;
-
 const { handleSecret } = require('../../../../../src/auth/router/handlers.js');
 
 describe('testing the users route handler', () => {

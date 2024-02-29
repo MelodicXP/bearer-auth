@@ -1,23 +1,22 @@
 'use strict';
 
-process.env.SECRET = "TEST_SECRET";
-
-const { db } = require('../../../../src/auth/models');
+const { app } = require('../../../../src/server.js');
 const supertest = require('supertest');
-const server = require('../../../../src/server.js').server;
+const { sequelizeDatabase } = require('../../../../src/auth/models');
+const mockRequest = supertest(app);
 
-const mockRequest = supertest(server);
-
+// Define test user data
 let userData = {
   testUser: { username: 'user', password: 'password' },
 };
 let accessToken = null;
 
 beforeAll(async () => {
-  await db.sync();
+  await sequelizeDatabase.sync({force: true});
 });
+
 afterAll(async () => {
-  await db.drop();
+  await sequelizeDatabase.close();
 });
 
 describe('Auth Router', () => {
@@ -54,6 +53,7 @@ describe('Auth Router', () => {
       .auth(username, password);
 
     accessToken = response.body.token;
+    console.log('AccessToken from router.test.js: ', accessToken);
 
     // First, use basic to login to get a token
     const bearerResponse = await mockRequest
@@ -116,6 +116,6 @@ describe('Auth Router', () => {
       .set('Authorization', `bearer accessgranted`);
 
     expect(response.status).toBe(403);
-    expect(response.text).toEqual('Invalid Login');
+    expect(response.body.error).toEqual('Invalid Login');
   });
 });

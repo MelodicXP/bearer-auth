@@ -13,11 +13,12 @@ const userSchema = require('./user-schema.js');
 
 // Connect to database for testing purpose, or connect to database from env
 const DATABASE_URL = process.env.NODE_ENV === 'test' 
-  ? 'sqlite::memory' 
+  ? 'sqlite:memory' 
   : process.env.DATABASE_URL;
 
 // Configure database with dialect options
 const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
+  dialect: 'postgres',
   dialectOptions: {
     ssl: {
       require: true,

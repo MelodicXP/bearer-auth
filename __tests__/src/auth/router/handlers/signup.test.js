@@ -1,15 +1,16 @@
 'use strict';
 
-const TEST_SECRET = process.env.SECRET;
+// const TEST_SECRET = process.env.SECRET;
 
-const { db } = require('../../../../../src/auth/models');
+const { sequelizeDatabase } = require('../../../../../src/auth/models');
 const { handleSignup } = require('../../../../../src/auth/router/handlers.js');
 
 beforeAll(async () => {
-  await db.sync();
+  await sequelizeDatabase.sync({force: true});
 });
+
 afterAll(async () => {
-  await db.drop();
+  await sequelizeDatabase.close();
 });
 
 describe('testing the Signup Handler', () => {
@@ -21,7 +22,7 @@ describe('testing the Signup Handler', () => {
   };
   const next = jest.fn();
 
-  test('Should respons with a new user if a Username and Password is present on the request', async () => {
+  test('Should respond with a new user if a Username and Password is present on the request', async () => {
 
     let req = {
       body: {

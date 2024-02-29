@@ -1,10 +1,10 @@
 'use strict';
 
-const TEST_SECRET = process.env.SECRET;
+// const TEST_SECRET = process.env.SECRET;
 
 const base64 = require('base-64');
 const middleware = require('../../../../src/auth/middleware/basic.js');
-const { db, users } = require('../../../../src/auth/models/index.js');
+const { sequelizeDatabase, userModel } = require('../../../../src/auth/models/index.js');
 
 let userInfo = {
   admin: { username: 'admin-basic', password: 'password' },
@@ -12,11 +12,11 @@ let userInfo = {
 
 // Pre-load our database with fake users
 beforeAll(async () => {
-  await db.sync();
-  await users.create(userInfo.admin);
+  await sequelizeDatabase.sync({force: true});
+  await userModel.create(userInfo.admin);
 });
 afterAll(async () => {
-  await db.drop();
+  await sequelizeDatabase.close();
 });
 
 describe('Auth Middleware', () => {
