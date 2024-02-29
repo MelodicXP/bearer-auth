@@ -23,6 +23,12 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use(authRoutes);
 
+// Establish default route
+app.get('/', (req, res, next) => {
+  const message = 'Default route message';
+  res.status(200).send(message);
+});
+
 // Catchalls
 app.use(notFound);
 app.use(errorHandler);
