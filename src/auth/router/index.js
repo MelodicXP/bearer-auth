@@ -5,6 +5,7 @@ const authRouter = express.Router();
 
 const basicAuth = require('../middleware/basic.js');
 const bearerAuth = require('../middleware/bearer.js');
+
 const {
   handleSignin,
   handleSignup,

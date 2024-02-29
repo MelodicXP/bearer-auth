@@ -12,9 +12,9 @@ Deploy an Express server that implements Bearer Authentication, with signup and 
 
 ### Links and Resources
 
-- [Pull Request](https://github.com/MelodicXP/basic-auth/pull/2)
-- [GitHub Actions ci/cd](https://github.com/MelodicXP/bearer-auth/actions/new)
-- Prod [back-end server url](https://basic-auth-vw0p.onrender.com)
+- [Pull Request](https://github.com/MelodicXP/bearer-auth/pulls)
+- [GitHub Actions ci/cd](https://github.com/MelodicXP/bearer-auth/actions)
+- Prod [back-end server url](https://four01lab07bearer-auth.onrender.com)
 
 ### Collaborators
 
@@ -54,4 +54,4 @@ DATABASE_URL: postgres://localhost:XXXX/name-of-server
 
 #### UML
 
-![Lab-02-UML](./assets/Lab06UML.png)
+![Lab-02-UML](./assets/demo.excalidraw.png)
