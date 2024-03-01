@@ -11,8 +11,12 @@ let userInfo = {
 
 // Pre-load our database with fake users
 beforeAll(async () => {
-  await sequelizeDatabase.sync({force: true});
-  await userModel.create(userInfo.admin);
+  await sequelizeDatabase.sync({ force: true });
+  try {
+    await userModel.create(userInfo.admin);
+  } catch (error) {
+    console.error('Error creating test user:', error);
+  }
 });
 
 afterAll(async () => {
@@ -24,6 +28,7 @@ describe('Auth Middleware', () => {
   // Mock the express req/res/next that we need for each middleware call
   const req = {};
   const res = {
+    setHeader: jest.fn(),
     status: jest.fn(() => res),
     send: jest.fn(() => res),
     json: jest.fn(() => res),
@@ -46,19 +51,19 @@ describe('Auth Middleware', () => {
 
     });
 
-    it('logs in a user with a proper token', () => {
+    it('logs in a user with a proper token', async() => {
 
-      const user = { username: 'admin' };
+      const user = { username: 'admin'};
+      
       const token = jwt.sign(user, SECRET);
 
       req.headers = {
         authorization: `Bearer ${token}`,
       };
 
-      return bearer(req, res, next)
-        .then(() => {
-          expect(next).toHaveBeenCalledWith();
-        });
+      await bearer(req, res, next);
+
+      expect(next).toHaveBeenCalledWith();
 
     });
   });

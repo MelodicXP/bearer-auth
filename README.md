@@ -54,4 +54,5 @@ DATABASE_URL: postgres://localhost:XXXX/name-of-server
 
 #### UML
 
-![Lab-02-UML](./assets/demo.excalidraw.png)
+![Lab-07-UML](./assets/bearerAuthUMLFileStruct.excalidraw.png)
+![Lab-07-UML-File-Structure](./assets/bearerAuthUML.png)
