@@ -27,3 +27,5 @@ jobs:
       env:
         CI: true
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        SECRET: ${{ secrets.SECRET }}
+        REISSUE_TOKEN_ON_EACH_REQUEST: ${{ secrets.REISSUE_TOKEN_ON_EACH_REQUEST }}
