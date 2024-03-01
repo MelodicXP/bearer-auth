@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const bearer = require('../../../../src/auth/middleware/bearer.js');
 const { sequelizeDatabase, userModel } = require('../../../../src/auth/models/index.js');
 const jwt = require('jsonwebtoken');
