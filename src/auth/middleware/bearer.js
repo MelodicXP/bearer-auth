@@ -1,5 +1,9 @@
 'use strict';
 
+require('dotenv').config();
+
+const REISSUE_TOKEN_ON_EACH_REQUEST = process.env.REISSUE_TOKEN_ON_EACH_REQUEST;
+
 const { userModel } = require('../models/index.js');
 
 module.exports = async (req, res, next) => {
@@ -7,19 +11,15 @@ module.exports = async (req, res, next) => {
   try {
 
     const authHeader = req.headers.authorization;
-    console.log ('Full authorization taken from middleware: ', authHeader);
   
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(403).json({ error: 'Invalid Login' });
     }
-  
-    const authType = req.headers.authorization.split(' ')[0];
-    console.log('Authtype taken from middleware: ', authType);
-  
-    const token = req.headers.authorization.split(' ')[1];
-    console.log('Token taken from middleware: ', token);
 
-    const validUser = await userModel.authenticateToken(token);
+    const token = req.headers.authorization.split(' ')[1];
+
+    // const validUser = await userModel.authenticateToken(token);
+    const validUser = await userModel.authenticateToken(token, REISSUE_TOKEN_ON_EACH_REQUEST ? res : null);
 
     if(validUser){ 
       req.user = validUser; // Attach user to request object
