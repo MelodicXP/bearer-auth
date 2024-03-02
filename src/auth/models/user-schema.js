@@ -17,6 +17,10 @@ const userSchema = (sequelize, DataTypes) => {
       type: DataTypes.STRING, 
       allowNull: false, 
     },
+    role: { // Add role to users created, stored in database
+      type: DataTypes.ENUM('user', 'writer', 'editor', 'admin'),
+      defaultValue: 'user',
+    },
 
     // Create token for user
     token: {
@@ -31,11 +35,25 @@ const userSchema = (sequelize, DataTypes) => {
         });
       },
     },
+    // Capabilities based on user role saved in database
+    capabilities: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          user: ['read'],
+          writer: ['read', 'create'],
+          editor: ['read', 'create', 'update'],
+          admin: ['read', 'create', 'update', 'delete'],
+        };
+        return acl[this.role];
+      },
+    },
   });
 
 
   model.beforeCreate(async (user) => {
     let hashedPass = await bcrypt.hash(user.password, 10);
+    console.log('hashed password in beforeCreate: ', hashedPass);
     user.password = hashedPass;
   });
 
