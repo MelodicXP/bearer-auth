@@ -38,7 +38,7 @@ describe('ACL Integration', () => {
     let response = await request.post('/create').set('Authorization', `Bearer ${testWriter.token}`);
 
     expect(response.status).toEqual(200);
-    expect(response.text).toEqual('You have read permission');
+    expect(response.text).toEqual('You have create permission');
   });
 
   it('does NOT allow update access', async () => {
@@ -46,13 +46,14 @@ describe('ACL Integration', () => {
     let response = await request.put('/update').set('Authorization', `Bearer ${testWriter.token}`);
 
     expect(response.status).toEqual(500);
-    expect(response.text).toEqual('Access Denied');
+    expect(response.body.error).toEqual('Access Denied');
   });
+
   it('does NOT allow delete access', async () => {
     // set('Authorization', `Bearer ${testWriter.token}`) is used to set and send header
     let response = await request.delete('/delete').set('Authorization', `Bearer ${testWriter.token}`);
 
     expect(response.status).toEqual(500);
-    expect(response.text).toEqual('Access Denied');
+    expect(response.body.error).toEqual('Access Denied');
   });
 });

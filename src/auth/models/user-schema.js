@@ -28,6 +28,7 @@ const userSchema = (sequelize, DataTypes) => {
       get() {
         return jwt.sign({ // header
           username: this.username, // payload
+          capabilities: this.capabilities, // payload (include capabilities based on user's role)
         },
         SECRET, // signature
         {
